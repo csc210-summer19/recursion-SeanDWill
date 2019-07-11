@@ -11,10 +11,12 @@
  * 
  * @author Rick Mercer and Your Name
  */
+
 public class LinkedList<E extends Comparable<E>> {
   // extends Comparable<E> means the type must be comparable to avoid CT errors
 
   // Inner class
+	
   private class Node {
     private E data;
     private Node next;
@@ -104,12 +106,18 @@ public class LinkedList<E extends Comparable<E>> {
   public E get(int index) {
     // This public method requires a private helper method with first 
     // as an argument. Here is an example with the helper immediately below
-    return get(first, 0, index);
+    return (E)get(first, 0, index);
   }
 
   private E get(Node ref, int startIndex, int stopIndex) {
     // TODO: Complete this method using recursion, no loop allowed.
-    return null;
+    if (stopIndex< startIndex) {
+    	return null;
+    }
+    if(startIndex == stopIndex) {
+    	return ref.data;
+    }
+    return get (ref.next, startIndex+1, stopIndex);
   }
  
   
@@ -118,13 +126,80 @@ public class LinkedList<E extends Comparable<E>> {
   public void removeAll(E el) {
     // This public method requires a call to a private helper method
     // with first as an argument. It must be recursive, no loop allowed.
+	  removeAllHelp(el, first, first);
+	  
   }
 
-  // Duplicate el next to each occurrence of el in this list.
+  public void removeAllHelp(E el, Node ref, Node prev) {
+	if (ref == null) {
+		return;
+	}
+	if (ref.data.equals(el)) {
+		if (ref == first) {
+			first = ref.next;
+			n--;
+			removeAllHelp(el, ref.next, first);
+		}
+		if (ref.next == null) {
+			prev.next = null;
+			n--;
+			return;
+		}
+		prev.next = ref.next;
+		if (prev.next == null) {
+			n--;
+			return;
+		}
+		
+		n--;
+		removeAllHelp(el, ref.next, prev);
+	}
+	
+
+	if (ref != null & (!ref.data.equals(el))) {
+		prev = ref;
+		
+	}
+	removeAllHelp(el, ref.next, prev);
+}
+
+
+
+// Duplicate el next to each occurrence of el in this list.
   public void duplicateAll(E el) {
     // This public method requires a call to a private helper method
     // with first as an argument. It must be recursive, no loop allowed.
+	  duplicateAllHelp(el, first);
+	  
   }
+
+private void duplicateAllHelp(E el, Node ref) {
+	// TODO Auto-generated method stub
+	boolean control = false; // will act as a signal whether a node was removed
+	if (ref == null) {
+		return;
+	}
+	if (ref.data.equals(el)) {
+		if (ref == first) {
+			Node newFirst = new Node (el, ref.next);
+			ref.next = newFirst;
+			n++;
+			control = true;
+		}
+		else {
+			Node newEl = new Node (el, ref.next);
+			ref.next = newEl;
+			n++;
+			control = true;
+		}
+		}
+	if (control == true) {
+		duplicateAllHelp(el, ref.next.next);
+	}
+	else {
+		duplicateAllHelp(el, ref.next);
+	}
+}
 
 
 

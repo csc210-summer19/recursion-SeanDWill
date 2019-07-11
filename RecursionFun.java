@@ -20,7 +20,13 @@ public class RecursionFun {
   // Complete recursive method combinations that returns from n choose k.
   // This method is described in 17_SimpleRecursion.pptx.
   public int combinations(int n, int k) {
-    return Integer.MIN_VALUE;
+	  if (n == k) {
+		  return 1;
+	  }
+	  if (k== 1) {
+		  return n;
+	  }
+	  return combinations(n-1, k-1)+combinations(n-1,k);
   }
 
  
@@ -35,7 +41,31 @@ public class RecursionFun {
   // Precondition: n >= 0
   public String intWithCommas(int n) {
     // TODO: Implement this method using recursion. Do not use a loop
-    return "Under construction";
+	  if (n<10) {
+		  String holder = Integer.toString(n);
+		  return holder; 
+	  }
+	  if (n<100) {
+		  String holder = Integer.toString(n);
+		  return holder;
+	  }
+	  if (n< 1000) {
+		  String holder = Integer.toString(n);
+		  return holder;
+	  }
+	  if (n>=1000) {
+		  String hold = Integer.toString(n);
+		  String subHold = hold.substring(0,hold.length()-3);
+		  int xx = Integer.parseInt(subHold);
+		  String huumm = Integer.toString(xx);
+		  String subHold1 = hold.substring(hold.length()-3,hold.length());
+		  subHold1 = ","+subHold1;
+		  int newN = Integer.parseInt(huumm);
+		  String toRet = "";
+		  toRet += intWithCommas(newN);
+		  return toRet +subHold1;
+	  }
+    return "";
   }
 
   // Write recursive method reverseArray that reverses the array elements in a
@@ -54,12 +84,38 @@ public class RecursionFun {
     // like x and x.length to keep track of array the indexes
     // with no loop. Here is an example with the private helper
     // immediately below.
-    reverseArray(x, 0, x.length);
+	int [] newX = new int [x.length];
+    newX = reverseArray(x, 0, x.length, newX);
+    assignNewEls(newX, 0, x);
   }
 
-  private void reverseArray(int[] x, int index, int len) {
+  private void assignNewEls(int[] newX, int i, int[] x) {
+	// TODO Auto-generated method stub
+	if (i >= x.length) {
+		return;
+	}
+	else {
+		x[i] = newX[i];
+	}
+	assignNewEls(newX, i+1, x);
+}
+
+
+private int[] reverseArray(int[] x, int index, int len, int [] newX) {
     // TODO: Complete this method with a recursive algorithm. 
     // Do NOT use a loop.
+	  if (x.length == 1 ) {
+		  return x;
+	  }
+	  else if (index >= len) {
+		  return newX;
+	  }
+	  else {
+		   newX[index] = x[len-1-index];
+		   return reverseArray(x, index+1, len, newX);
+		  
+		  
+	  }
   }
 
   // Write recursive method arrayRange that returns the maximum
@@ -67,19 +123,82 @@ public class RecursionFun {
   // integers, Use recursion; do not use a loop. 
   // Precondition: a.length > 0
   public int arrayRange(int[] a) {
-    return Integer.MIN_VALUE;
+    return arrayRangeMax(a, Integer.MIN_VALUE, 0) - arrayRangeMin(a, Integer.MAX_VALUE, 0);
   }
 
-  // Return true if nums has all int elements in ascending order.
+  private int arrayRangeMin(int[] a, int val, int index) {
+	// TODO Auto-generated method stub
+	if (a.length == 0) {
+		return 0;
+	}
+	else if (index >= a.length) {
+		return val;
+	}
+	else {
+		if (a[index] < val) {
+			val = a[index];
+		}
+		return arrayRangeMin(a, val, index+1);
+	}
+}
+
+
+private int arrayRangeMax(int[] a, int val, int index) {
+	// TODO Auto-generated method stub
+	if (a.length == 0) {
+		return 0;
+	}
+	else if (index >= a.length) {
+		return val;
+	}
+	else {
+		if (a[index] > val) {
+			val = a[index];
+		}
+		return arrayRangeMax(a, val, index+1);
+	}
+}
+
+
+// Return true if nums has all int elements in ascending order.
   // If not isSorted, return false.
   public boolean isSorted(int[] nums) {
     // Need to send down 0 to keep track of the index
-    return ! true;
+	  if (nums.length == 0) {
+		  return true;
+	  }
+    return isSortedHelp(nums, 0);
   }
 
-  // Complete method found to return true if search is found in strs.
+  private boolean isSortedHelp(int[] nums, int i) {
+	// TODO Auto-generated method stub
+	if (i>= nums.length-1) {
+		return true; 
+	}
+	if (nums[i] > nums[i+1]) {
+		return false;
+	}
+	return isSortedHelp(nums, i+1);
+}
+
+
+// Complete method found to return true if search is found in strs.
   // If not found, return false. Use equals, not ==.
   public boolean found(String search, String[] strs) {
-     return ! true;
+     return foundHelp(search, strs, 0);
   }
+
+
+private boolean foundHelp(String search, String[] strs, int i) {
+	if (strs.length == 0) {
+		return true;
+	}
+	if (i>= strs.length) {
+		return false;
+	}
+	if (strs[i].equals(search)) {
+		return true;
+	}
+	return foundHelp(search, strs, i+1);
+}
 }

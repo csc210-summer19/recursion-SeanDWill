@@ -165,9 +165,10 @@ public class RecursionFunTest {
     intList.addLast(7);
     intList.addLast(3);
     intList.removeAll(3);
-      
+     
+
     assertEquals((Integer)5, intList.get(0));
-    assertEquals((Integer)2, intList.get(1));  
+    assertEquals((Integer)7, intList.get(1));  
   }
 
   @Test
@@ -234,8 +235,12 @@ public class RecursionFunTest {
 
   @Test
   public void testFindExitWithSmallGrid2() {
-    char[][] grid = { { '+', '+', '+', '+' }, { ' ', ' ', ' ', '+' }, { '+', ' ', ' ', '+' }, { '+', ' ', ' ', '+' },
-        { '+', '+', '+', '+' } };
+    char[][] grid = { 
+    		{ '+', '+', '+', '+' },
+    		{ ' ', ' ', ' ', '+' },
+    		{ '+', ' ', ' ', '+' }, 
+    		{ '+', ' ', ' ', '+' },
+            { '+', '+', '+', '+' } };
     ObstacleCourse top = new ObstacleCourse(2, 2, grid);
     assertEquals(2, top.getStartRow());
     assertEquals(2, top.getStartColumn());
@@ -246,8 +251,12 @@ public class RecursionFunTest {
 
   @Test
   public void testFindExitWithSmallGrid3() {
-    char[][] grid = { { '+', '+', ' ', '+' }, { ' ', ' ', ' ', '+' }, { '+', ' ', ' ', '+' }, { '+', ' ', ' ', '+' },
-        { '+', '+', '+', '+' } };
+    char[][] grid = { 
+    		{ '+', '+', ' ', '+' },
+    		{ ' ', ' ', ' ', '+' }, 
+    		{ '+', ' ', ' ', '+' }, 
+    		{ '+', ' ', ' ', '+' },
+    		{ '+', '+', '+', '+' } };
     ObstacleCourse top = new ObstacleCourse(3, 1, grid);
     assertEquals(3, top.getStartRow());
     assertEquals(1, top.getStartColumn());
